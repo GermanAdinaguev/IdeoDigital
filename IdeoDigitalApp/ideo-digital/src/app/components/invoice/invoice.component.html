@@ -1,0 +1,138 @@
+<div style="margin-left: 10px;margin-top: 10px;">
+<h3>Invoice number: {{invoice.id}}  , Date: {{invoice.invoiceDate | date}}</h3>
+
+<form #f="ngForm"  (ngSubmit)="f.form.valid && createOrUpdateInvoice()" >
+  <div class="form-group row">
+    <label for="input1"
+           class="col-sm-2 col-form-label">Business Name</label>
+    <div class="col-sm-4">
+      <input type="text" [(ngModel)]="invoice.businessName" name="businessName"
+             [ngClass]="{'is-invalid': businessName.invalid && f.submitted,'is-valid':businessName.valid && f.submitted}"
+             #businessName="ngModel"
+             class="form-control"
+             id="input1"
+             required
+             placeholder="Business Name">
+    </div>
+    <div class="col-sm-6 text-danger" *ngIf="businessName.invalid && f.submitted">
+      Business Name is required.
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="input2"
+           class="col-sm-2 col-form-label">Business Address</label>
+    <div class="col-sm-4">
+      <input type="text" [(ngModel)]="invoice.businessAddress"
+             [ngClass]="{'is-invalid': businessAddress.invalid && f.submitted,'is-valid':businessAddress.valid && f.submitted}"
+             #businessAddress="ngModel"
+             name="businessAddress"
+             class="form-control"
+             id="input2"
+             required
+             placeholder="Business Address">
+    </div>
+    <div class="col-sm-6 text-danger" *ngIf="businessAddress.invalid && f.submitted">
+      Business Address is required.
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="input3"
+           class="col-sm-2 col-form-label">Business Phone</label>
+    <div class="col-sm-4">
+      <input type="text" [(ngModel)]="invoice.businessPhone"
+             [ngClass]="{'is-invalid': businessPhone.invalid && f.submitted,'is-valid':businessPhone.valid && f.submitted}"
+             #businessPhone="ngModel"
+             name="businessPhone"
+             class="form-control"
+             required
+             minlength="10"
+             maxlength="10"
+             pattern="[0][5][0-9]{8}"
+             id="input3"
+             placeholder="Phone Number">
+    </div>
+    <div class="col-sm-6 text-danger" *ngIf="businessPhone.invalid && f.submitted">
+      Phone must starting with “05” and has 10 digits.
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="input1"
+           class="col-sm-2 col-form-label">Customer Name</label>
+    <div class="col-sm-4">
+      <input type="text" [(ngModel)]="invoice.customerName" name="customerName"
+             [ngClass]="{'is-invalid': customerName.invalid && f.submitted,'is-valid':customerName.valid && f.submitted}"
+             #customerName="ngModel"
+             class="form-control"
+             id="input1"
+             required
+             placeholder="Customer Name">
+    </div>
+    <div class="col-sm-6 text-danger" *ngIf="customerName.invalid && f.submitted">
+      Customer Name is required.
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="input2"
+           class="col-sm-2 col-form-label">Customer Address</label>
+    <div class="col-sm-4">
+      <input type="text" [(ngModel)]="invoice.customerAddress"
+             [ngClass]="{'is-invalid': customerAddress.invalid && f.submitted,'is-valid':customerAddress.valid && f.submitted}"
+             #customerAddress="ngModel"
+             name="customerAddress"
+             class="form-control"
+             id="input2"
+             required
+             placeholder="Customer Address">
+    </div>
+    <div class="col-sm-6 text-danger" *ngIf="customerAddress.invalid && f.submitted">
+      Customer Address is required.
+    </div>
+  </div>
+
+<table class="table">
+  <thead>
+  <tr>
+    <th>Item Name</th>
+    <th>Quantity</th>
+    <th>Price Per Unit</th>
+    <th>Total Price</th>
+    <th>Edit</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let item of invoice.invoiceItems">
+    <td>{{item.itemName}}</td>
+    <td>{{item.quantity}}</td>
+    <td>{{item.pricePerUnit}}</td>
+    <td>{{item.totalPrice}}</td>
+    <td><button type="button" class="btn btn-primary" (click)="editItem(item)">Edit Item</button></td>
+  </tr>
+  <tr>
+    <td colspan="4"><button type="button" class="btn btn-primary" (click)="createItem()">Add Item</button></td>
+  </tr>
+  </tbody>
+</table>
+
+  <!-- <div class="form-group row">
+    <div class="col-sm-10" style="color:red">{{error}}
+    </div>
+  </div> -->
+
+  <div>
+    <h2>Invoice Totals</h2>
+    <p>Subtotal: {{ invoice.subtotal | currency }}</p>
+    <p>Tax: {{ invoice.tax}}%</p>
+    <p>Total: {{ invoice.total | currency }}</p>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-10">
+      <button type="submit" name="btnSubmit" class="btn btn-primary">{{invoice.id > 0 ? "Update" : "Create"}}</button>
+    </div>
+  </div>
+</form>
+</div>

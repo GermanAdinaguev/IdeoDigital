@@ -1,0 +1,81 @@
+<form #f="ngForm"  (ngSubmit)="f.form.valid && saveItem()" >
+<div class="modal-header">
+  <h5 class="modal-title">Modal title</h5>
+  <button type="button" class="close" data-dismiss="modal" (click)="closeModal()">
+      <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+
+    <div class="form-group row">
+      <label for="input1"
+             class="col-sm-4 col-form-label">Item Name</label>
+      <div class="col-sm-4">
+        <input type="text" [(ngModel)]="invoiceItem.itemName" name="itemName"
+               [ngClass]="{'is-invalid': itemName.invalid && f.submitted,'is-valid':itemName.valid && f.submitted}"
+               #itemName="ngModel"
+               class="form-control"
+               id="input1"
+               required
+               placeholder="Item Name">
+      </div>
+      <div class="col-sm-6 text-danger" *ngIf="itemName.invalid && f.submitted">
+        Item Name is required.
+      </div>
+    </div>
+  
+    <div class="form-group row">
+      <label for="input2"
+             class="col-sm-4 col-form-label">Quantity</label>
+      <div class="col-sm-4">
+        <input type="number" [(ngModel)]="invoiceItem.quantity"
+               [ngClass]="{'is-invalid': quantity.invalid && f.submitted,'is-valid':quantity.valid && f.submitted}"
+               #quantity="ngModel"
+               name="quantity"
+               class="form-control"
+               id="input2"
+               min="1"
+               required               
+               placeholder="Quantity">
+      </div>
+      <div class="col-sm-6 text-danger" *ngIf="quantity.invalid && f.submitted">
+        Quantity is required.
+      </div>
+    </div>
+  
+    <div class="form-group row">
+      <label for="input3"
+             class="col-sm-4 col-form-label">Price Per Unit</label>
+      <div class="col-sm-4">
+        <input type="number" [(ngModel)]="invoiceItem.pricePerUnit"
+               [ngClass]="{'is-invalid': pricePerUnit.invalid && f.submitted,'is-valid':pricePerUnit.valid && f.submitted}"
+               #pricePerUnit="ngModel"
+               name="pricePerUnit"
+               class="form-control"
+               min="0"
+               required
+               id="input3"
+               placeholder="Price Per Unit">
+      </div>
+      <div class="col-sm-6 text-danger" *ngIf="pricePerUnit.invalid && f.submitted">
+        Price Per Unit is required.
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="input3"
+             class="col-sm-4 col-form-label">Total</label>
+      <div class="col-sm-4">
+        {{  invoiceItem.pricePerUnit * invoiceItem.quantity}}
+      </div>
+      <div class="col-sm-6 text-danger" *ngIf="pricePerUnit.invalid && f.submitted">
+        Price Per Unit is required.
+      </div>
+    </div>
+</div>
+<div class="modal-footer">
+  <button type="submit" name="btnSubmit" class="btn btn-primary">{{invoiceItem.id > 0 ? "Update Item" : "Add Item"}}</button>
+</div>
+</form>
+
+
